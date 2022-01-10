@@ -20,7 +20,7 @@ public class MySQLDemo {
     static final String USER = "root";
     static final String PASS = "Aduan1234";
  
-    public static JSONArray query() {
+    public static JSONArray query(String sql) {
         Connection conn = null;
         Statement stmt = null;
         try{
@@ -34,8 +34,8 @@ public class MySQLDemo {
             // 执行查询
             System.out.println(" 实例化Statement对象...");
             stmt = conn.createStatement();
-            String sql;
-            sql = "SELECT * FROM doubleball order by id asc";
+//            String sql;
+//            sql = "SELECT * FROM ( SELECT * FROM doubleball order by id desc  LIMIT "+limit +" )a ORDER BY a.id asc ";
             ResultSet rs = stmt.executeQuery(sql);
             
             
@@ -102,7 +102,7 @@ public class MySQLDemo {
 	        System.out.println(" 实例化Statement对象...");
 	        stmt = conn.createStatement();
 	        String sql;
-	        sql = "insert into doubleball VALUES('"+no+"','"+r1+"','"+r2+"','"+r3+"','"+r4+"','"+r5+"','"+r6+"','"+b1+"');";
+	        sql = "insert into doubleball VALUES('"+no+"',"+r1+","+r2+","+r3+","+r4+","+r5+","+r6+","+b1+");";
 	        boolean rs = stmt.execute(sql);
 	        
 	        // 完成后关闭

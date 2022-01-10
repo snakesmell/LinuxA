@@ -30,9 +30,9 @@ public class Interface1 extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
-		JSONArray arry =MySQLDemo.query();
-		
+		String limit = request.getParameter("limit");
+		String sql = "SELECT * FROM ( SELECT * FROM doubleball order by id desc  LIMIT "+limit +" )a ORDER BY a.id asc ";
+		JSONArray arry =MySQLDemo.query(sql);
 		response.getWriter().print(arry.toJSONString());
 //		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
@@ -42,7 +42,7 @@ public class Interface1 extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+//		doGet(request, response);
 		
 	}
 
