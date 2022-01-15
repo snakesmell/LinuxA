@@ -14,9 +14,9 @@ import com.demo.db.MySQLDemo;
 public class HtmlParse {
 
 	public static void main(String[] args) {
-//		for(int i=2016001;i<20161160;i++) {
-//			HtmlParse.parse(String.valueOf(i));
-//		}
+		for(int i=2016001;i<20161160;i++) {
+			HtmlParse.parse(String.valueOf(i));
+		}
 //		HtmlParse.parse("2016102");
 	}
 	public static void parse(String no) {
