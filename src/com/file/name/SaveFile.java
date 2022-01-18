@@ -1,6 +1,7 @@
 package com.file.name;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 
@@ -42,28 +43,31 @@ public class SaveFile {
      * */
     @RequestMapping("fileUpload")
     @ResponseBody 
-    public String fileUpload(@RequestParam("fileName") MultipartFile file){
-        if(file.isEmpty()){
-            return "false";
-        }
-        String fileName = file.getOriginalFilename();
-        
-        int size = (int) file.getSize();
-        System.out.println(fileName + "-->" + size);
-        
-        String path = filepath + "/" + fileName;
-        File dest = new File(path);
-        if(!dest.getParentFile().exists()){ 
-            dest.getParentFile().mkdir();
-        }
-        try {
+    public void fileUpload(@RequestParam("fileName") MultipartFile file,@RequestParam("ftype") String ftype, HttpServletResponse response) {
+    	try {
+	    	if(file.isEmpty()){
+	        	response.getWriter().print(1);
+	        }
+	        String fileName = file.getOriginalFilename();
+	        
+	        int size = (int) file.getSize();
+	        System.out.println(fileName + "-->" +ftype+"---"+ size);
+	        
+	        String path = filepath + "/" + fileName;
+	        File dest = new File(path);
+	        if(!dest.getParentFile().exists()){ 
+	            dest.getParentFile().mkdir();
+	        }
             file.transferTo(dest); 
-            fileService.save(path,fileName);//保存文件
-            return "true";
+            fileService.save(path,fileName,ftype);//保存文件
+         // 设置302状态码
+            response.setStatus(302);
+            // 设置location响应头
+            response.setHeader("location", "/ThePage/line.html");
+            // 注意：一次重定向，向服务器发送两次请求
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-            return "false";
         }
     }
 }

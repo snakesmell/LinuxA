@@ -47,11 +47,12 @@ public class QueryFile {
 				String id   = String.valueOf(map.get("id"));
 				String path = String.valueOf(map.get("filepath"));
 				String name = String.valueOf(map.get("filename"));
+				String ftype = String.valueOf(map.get("ftype"));
 				JSONObject obj = new JSONObject();
 				obj.put("name", name);
 				obj.put("path", path);
 				obj.put("id", id);
-//				obj.put("url", );
+				obj.put("ftype", ftype);
 				arry.put(obj);
 			}
 			response.setContentType("application/json;charset=UTF-8");
@@ -82,8 +83,12 @@ public class QueryFile {
 			
 			int flag = fileService.deletebyid(id);
 			
-			response.getWriter().print(flag);
-		} catch (IOException e) {
+			// 设置302状态码
+            response.setStatus(302);
+            // 设置location响应头
+            response.setHeader("location", "/ThePage/line.html");
+            // 注意：一次重定向，向服务器发送两次请求
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

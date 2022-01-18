@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
-public class FileService {
+public class ElevateService {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -17,9 +17,8 @@ public class FileService {
      * 查询所有数据
      * @return
      */
-    public List<Map<String, Object>> list(){
-    	List<Map<String, Object>> list = jdbcTemplate.queryForList("select * FROM filepath ORDER BY ftype");
-    	System.out.println(list);
+    public List<Map<String, Object>> list(String limit){
+    	List<Map<String, Object>> list = jdbcTemplate.queryForList("SELECT * FROM ( SELECT * FROM doubleball order by id desc  LIMIT "+limit +" )a ORDER BY a.id asc ");
         return list;
     }
     /**
